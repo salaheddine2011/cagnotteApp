@@ -82,11 +82,38 @@ CagnotteApp provides a couple of key RESTful endpoints to interact with the cust
 - **400 Bad Request:** Invalid client ID.
 - **404 Not Found:** Client not found.
 
+#### Example Requests
+1. Add a client
+```bash
+POST /api/clients
+Content-Type: application/json
+
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "userName": "johndoe123"
+}
+```
+2. Show a Specific Client by ID
+`GET /api/clients/1`
+3. Add Amount of a specific user to Cagnotte
+```bash
+POST /api/cagnottes/{clientId}/add
+Content-Type: application/json
+
+{
+    "amount": 100.50
+}
+
+```
+4. Check Cagnotte Availability
+
+`GET /api/cagnottes/1/available`
+
+- return true or false
+
 ## General Information
 
 These endpoints are designed to facilitate the management of client rewards within the CagnotteApp system. By providing the necessary client ID and other required parameters, clients can easily manage and check their cagnotte status through a user-friendly API.
 
-## Using the API
-
-To use these endpoints, you'll need to ensure you have the correct client ID and the API is being called with valid HTTP methods. If you encounter any issues such as `404 Not Found` or `400 Bad Request`, please check the request data and the path variables to ensure accuracy.
 
