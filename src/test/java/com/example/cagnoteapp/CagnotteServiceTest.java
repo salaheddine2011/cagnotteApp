@@ -12,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -56,10 +55,15 @@ public class CagnotteServiceTest {
 
     @Test
     void addAmountToCagnotte_ClientNotFound_ThrowsException() {
+        // Setup the conditions to throw ClientNotFoundException
         when(clientRepository.findById(anyLong())).thenReturn(Optional.empty());
-        Exception exception = assertThrows(ClientNotFoundException.class, () -> {
+
+        // Assert that ClientNotFoundException is thrown
+        ClientNotFoundException exception = assertThrows(ClientNotFoundException.class, () -> {
             cagnotteService.addAmountToCagnotte(2L, new BigDecimal("50"));
         });
+
+        // Verify the message in the exception
         assertTrue(exception.getMessage().contains("Client with ID 2 not found"));
     }
 

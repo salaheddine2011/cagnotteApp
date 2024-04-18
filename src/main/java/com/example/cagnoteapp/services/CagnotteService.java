@@ -23,12 +23,13 @@ public class CagnotteService {
     private TransactionRepository transactionRepository;
 
     public void addAmountToCagnotte(Long clientId, BigDecimal amount) {
-        Optional<Client> client = clientRepository.findById(clientId);
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ClientNotFoundException("Client with ID " + clientId + " not found."));
         if (client == null) {
             throw new IllegalArgumentException("Client not found");
         }
         Transaction transaction = new Transaction();
-        transaction.setClient(client.get());
+        transaction.setClient(client);
         transaction.setAmount(amount);
         transaction.setTimestamp(LocalDateTime.now());
         transactionRepository.save(transaction);

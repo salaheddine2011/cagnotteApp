@@ -19,7 +19,7 @@ public class CagnotteController {
     @Autowired
     private CagnotteService cagnotteService;
 
-    @PostMapping("/{clientId}/add")
+    @PostMapping("/{clientId}")
     public ResponseEntity<?> addAmountToCagnotte(@PathVariable Long clientId, @RequestBody AmountDTO amountDTO) {
         try {
             cagnotteService.addAmountToCagnotte(clientId, amountDTO.getAmount());
@@ -29,7 +29,7 @@ public class CagnotteController {
         }
     }
 
-    @GetMapping("/{clientId}/available")
+    @GetMapping("/{clientId}")
     public ResponseEntity<?> isCagnotteAvailable(@PathVariable Long clientId) {
         try {
             boolean available = cagnotteService.isCagnotteAvailable(clientId);
