@@ -32,6 +32,21 @@ cd cagnoteApp
 mvn spring-boot:run
 ```
 
+## Data Model Relationships
+### Client and Transaction Relationship
+The application uses two main entities, Client and Transaction, which are mapped with a bidirectional relationship:
+
+- Client Entity: Represents the customer of the service. Each client can have multiple transactions, indicating various interactions or transactions the client has made.
+- Transaction Entity: Represents individual transactions linked to a specific client. Each transaction records the amount and the exact timestamp when it occurred.
+### JPA Entity Relationship
+- The Client entity contains a list of Transaction entities. This relationship is annotated with @OneToMany, indicating that each client can have multiple transactions. The mappedBy attribute specifies that the Client entity is not the owner of the relationship and that the Transaction entity contains the foreign key.
+- The Transaction entity references back to the Client entity with a @ManyToOne annotation, indicating each transaction is associated with one client. The @JoinColumn annotation specifies the column in the Transaction table that holds the foreign key reference to the Client entity.
+- Handling JSON Serialization
+@JsonManagedReference and @JsonBackReference are used to handle the recursive issue in JSON serialization and deserialization processes:
+@JsonManagedReference is used on the collection side of the relationship (in Client entity) to indicate that it should be serialized normally.
+@JsonBackReference is used on the referencing entity (Transaction) to indicate that it should not be serialized to prevent infinite recursion.
+This setup helps in maintaining proper JSON structure when entities are converted to JSON format, especially when serving RESTful responses.
+
 ## Accessing the H2 Database Console
 The H2 console is an embedded web application that provides a convenient way to interact with the H2 database used by the CagnotteApp.
 
@@ -119,7 +134,7 @@ Content-Type: application/json
 `GET /api/clients/1`
 3. Add Amount of a specific user to Cagnotte
 ```bash
-POST /api/cagnottes/{clientId}/add
+POST /api/cagnottes/{clientId}
 Content-Type: application/json
 
 {
@@ -129,7 +144,7 @@ Content-Type: application/json
 ```
 4. Check Cagnotte Availability
 
-`GET /api/cagnottes/1/available`
+`GET /api/cagnottes/1`
 
 - return true or false
 
