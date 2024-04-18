@@ -32,7 +32,28 @@ cd cagnoteApp
 mvn spring-boot:run
 ```
 
-# CagnotteApp API Endpoints
+## Accessing the H2 Database Console
+The H2 console is an embedded web application that provides a convenient way to interact with the H2 database used by the CagnotteApp.
+
+### How to Access
+After starting the CagnotteApp, you can access the H2 Console at the following URL:
+
+`http://localhost:8080/h2-console`
+
+### Login Details
+- JDBC URL: Typically, the JDBC URL is jdbc:h2:mem:testdb (or check your application's configuration).
+- User Name: sa (default username if not configured otherwise)
+- Password: (leave blank if not configured otherwise)
+- Ensure that the JDBC URL matches the one configured in your application.properties or application.yml.
+
+Important Notes
+Security: The H2 console should not be enabled in production environments as it can pose a security risk.
+Data Persistence: Data in the H2 database is not persistent and will be lost when the application is restarted, unless configured otherwise.
+
+
+
+
+## CagnotteApp API Endpoints
 
 CagnotteApp provides a couple of key RESTful endpoints to interact with the customer loyalty cagnotte system. Below is a description of these endpoints, including how to use them.
 
